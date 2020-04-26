@@ -23,4 +23,4 @@ def hanoi(n, fr, to, spare):
 
 
 # Tests
-hanoi(200, 'A', 'B', 'C')
+hanoi(20, 'A', 'B', 'C')
