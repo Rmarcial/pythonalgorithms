@@ -17,7 +17,7 @@ def is_palindrome_iter(sentence):
 
 # Recursive
 def is_palindrome_recur(sentence):
-    if len(sentence) == 0 or len(sentence) == 1:
+    if len(sentence) <= 1:
         return True
     else:
         return first_char(sentence) == last_char(sentence) \
