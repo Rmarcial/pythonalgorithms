@@ -39,7 +39,7 @@ def middle(sentence):
 
 # Tests
 stc = ""
-for n in range(10001):
+for n in range(1000):
     stc += "a"
 
 print(is_palindrome_iter(stc))
