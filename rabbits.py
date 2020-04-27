@@ -10,7 +10,7 @@ Fibonacci's rabbit puzzle:
 """
 
 
-# Iterative - Computes the number of rabbits at some month
+# Iterative - Computes the number of rabbits at a given month
 def rabbits_iter(month):
     young = 2
     adult = 0
@@ -22,7 +22,7 @@ def rabbits_iter(month):
     return young + adult
 
 
-# Recursive - Computes the number of rabbits at some month
+# Recursive - Computes the number of rabbits at a given month
 def rabbits_recur(month):
     if month == 0 or month == 1:
         return 2
@@ -30,9 +30,28 @@ def rabbits_recur(month):
         return rabbits_recur(month-2) + rabbits_recur((month-1))
 
 
-# Tests
-print(rabbits_iter(41))
-print(rabbits_recur(41))
+# Recursive with dictionary - prevent several computations of the same value
+def rabbits_recur_dict(month):
+    computations_dict = {}
 
+    def compute(mth, dic):
+        if mth == 0 or mth == 1:
+            return 2
+        else:
+            if mth-2 in dic and mth-1 in dic:
+                return dic[mth - 2] + dic[mth - 1]
+            else:
+                dic[mth - 2] = compute(mth - 2, dic)
+                dic[mth - 1] = compute(mth - 1, dic)
+                return dic[mth - 2] + dic[mth - 1]
+
+    return compute(month, computations_dict)
+
+
+# Tests
+nr = 37
+print(rabbits_iter(nr))
+print(rabbits_recur(nr))
+print(rabbits_recur_dict(nr))
 
 
