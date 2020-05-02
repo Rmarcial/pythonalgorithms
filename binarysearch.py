@@ -1,17 +1,21 @@
 """
- Implementation of the binary search algorithm to find if an element is in a list
+ Implementation of the bisection search algorithm to find if an element is in a list
 """
 
 
-def binary_search(el, lst):
+def bisection_search1(el, lst):
     """
-    binary search strategy: O(log n) n is length of the list
+    bisection search strategy: O(n log n) n is length of the list
+    list slicing costs O(n) because it makes list copies
     :param el: element to search for in the list
     :param lst: list of elements
     :return: True if list contains element
     """
-    if not lst:
+    if lst == []:
         return False
+
+    elif len(lst) == 1:
+        return lst[0] == el
 
     else:
         lst.sort()
@@ -22,13 +26,44 @@ def binary_search(el, lst):
             if lst[middle] == el:
                 return True
             elif lst[middle] > el:
-                return binary_search(el, lst[:middle])
+                return bisection_search1(el, lst[:middle])
             else:
-                return binary_search(el, lst[middle+1:])
+                return bisection_search1(el, lst[middle:])
+
+
+def bisection_search(el, lst):
+    """
+    bisection search strategy: O(log n) n is length of the list
+    uses list limits in the search, instead of slicing, to avoid copies
+    :param el: element to look for in the list
+    :param lst: list
+    :return: True if list contains element
+    """
+
+    # searches for element in a sorted list
+    def bi_search(el, lst, low, high):
+        if low == high:
+            return el == lst[low]
+        else:
+            middle = (low + high) // 2
+            if el == lst[middle]:
+                return True
+            elif el < lst[middle]:
+                return bi_search(el, lst, low, middle - 1)
+            else:
+                return bi_search(el, lst, middle + 1, high)
+
+    if not lst:  # empty list
+        return False
+    else:
+        lst.sort()
+        low = 0
+        high = len(lst) - 1
+        return bi_search(el, lst, low, high)
 
 
 # Tests
-elements = [3, 1, 2, -23, 5, 342324324, 0]
-print(binary_search(-24, elements))
+elements = [10, 20]
+print(bisection_search(21, elements))
 
 
